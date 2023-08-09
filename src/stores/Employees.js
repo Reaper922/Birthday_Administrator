@@ -79,11 +79,18 @@ export const useEmployeeStore = defineStore('employee', () => {
     employees.value.push(employee);
   }
 
+  function deleteEmployee(id) {
+    employees.value = employees.value.filter((employee) => {
+      return employee.id !== id;
+    });
+  }
+
   return {
     currentDate,
     employees,
     employeesSortedByBirthdate,
     employeesSortedByName,
-    addEmployee
+    addEmployee,
+    deleteEmployee
   };
 });
