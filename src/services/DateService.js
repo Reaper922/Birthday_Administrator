@@ -1,12 +1,12 @@
-function daysUntilBirthday(currentDate, userBirthdate) {
+function daysUntilNextBirthday(currentDate, employeeBirthdate) {
   const currentYear = currentDate.getFullYear();
-  const currentUserBirthday = new Date(userBirthdate).setFullYear(currentYear);
-  const diffInMillSec = currentUserBirthday - currentDate;
+  const currentemployeeBirthday = new Date(employeeBirthdate).setFullYear(currentYear);
+  const diffInMillSec = currentemployeeBirthday - currentDate;
   const diffInDays = Math.floor(diffInMillSec / (1000 * 60 * 60 * 24)) + 1;
 
   if (diffInDays < 0) {
-    const nextUserBirthday = new Date(userBirthdate).setFullYear(currentYear + 1);
-    const nextDiffInMillSec = nextUserBirthday - currentDate;
+    const nextemployeeBirthday = new Date(employeeBirthdate).setFullYear(currentYear + 1);
+    const nextDiffInMillSec = nextemployeeBirthday - currentDate;
     const nextDiffInDays = Math.floor(nextDiffInMillSec / (1000 * 60 * 60 * 24) + 1);
 
     return nextDiffInDays;
@@ -15,10 +15,10 @@ function daysUntilBirthday(currentDate, userBirthdate) {
   return diffInDays;
 }
 
-function formatBirthdate(birthdate) {
+function formatDate(birthdate) {
   const dateArr = birthdate.split('-');
 
   return `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}`;
 }
 
-export { daysUntilBirthday, formatBirthdate };
+export { daysUntilNextBirthday, formatDate };
