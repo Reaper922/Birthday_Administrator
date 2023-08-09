@@ -2,11 +2,12 @@
 import { ref } from 'vue';
 import AppSidebar from '@/components/AppSidebar.vue';
 import AppCard from '@/components/AppCard.vue';
+import { daysUntilBirthday } from '@/services/DateService';
 
 const isOpen = ref(false);
 
 const currentDate = new Date();
-const testUser = [
+const testUser = ref([
   {
     id: 1,
     name: 'Hans Müller',
@@ -32,22 +33,15 @@ const testUser = [
     name: 'Karoline Binsen',
     birthdate: '1984-11-19'
   }
-];
+]);
 
-testUser.sort((userA, userB) => {
-  const currentYear = currentDate.getFullYear();
-  const currentBirthdayUserA = new Date(userA.birthdate).setFullYear(currentYear);
-  const currentBirthdayUserB = new Date(userB.birthdate).setFullYear(currentYear);
-  const diffInDays = currentBirthdayUserA - currentBirthdayUserB;
-
-  if (diffInDays < 0) {
-    const nextBirthdayUserB = new Date(userB.birthdate).setFullYear(currentYear + 1);
-
-    return currentBirthdayUserA - nextBirthdayUserB;
-  } else {
-    return diffInDays;
-  }
+testUser.value.sort((userA, userB) => {
+  const daysUntilBirthdayUserA = daysUntilBirthday(currentDate, userA.birthdate);
+  const daysUntilBirthdayUserB = daysUntilBirthday(currentDate, userB.birthdate);
+  return daysUntilBirthdayUserA - daysUntilBirthdayUserB;
 });
+
+const userSelection = testUser.value.slice(0, 4);
 </script>
 
 <template>
@@ -61,7 +55,7 @@ testUser.sort((userA, userB) => {
       <h2>Anstehende Geburtstage:</h2>
       <div class="card-container">
         <AppCard
-          v-for="user in testUser"
+          v-for="user in userSelection"
           :key="user.id"
           :user="user"
           :currentDate="currentDate"
