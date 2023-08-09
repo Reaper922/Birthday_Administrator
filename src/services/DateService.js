@@ -15,10 +15,14 @@ function daysUntilNextBirthday(currentDate, employeeBirthdate) {
   return diffInDays;
 }
 
-function formatDate(birthdate) {
+function formatBirthdate(birthdate) {
   const dateArr = birthdate.split('-');
 
   return `${dateArr[2]}.${dateArr[1]}.${dateArr[0]}`;
 }
 
-export { daysUntilNextBirthday, formatDate };
+function formatCurrentDate(date) {
+  return formatBirthdate(date.toISOString().split('T')[0]);
+}
+
+export { daysUntilNextBirthday, formatBirthdate, formatCurrentDate };
