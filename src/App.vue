@@ -35,6 +35,7 @@ const testUser = ref([
   }
 ]);
 
+// Sortierung erfolgt später über firebase.
 testUser.value.sort((userA, userB) => {
   const daysUntilBirthdayUserA = daysUntilBirthday(currentDate, userA.birthdate);
   const daysUntilBirthdayUserB = daysUntilBirthday(currentDate, userB.birthdate);
