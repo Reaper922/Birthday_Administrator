@@ -25,11 +25,11 @@ const isSidebarOpen = ref(false);
       />
       <img src="/assets/img/logo.png" alt="Logo" class="logo" draggable="false" />
       <h1>B-Shampoo</h1>
+      <h2 class="currentDate">{{ formatCurrentDate(employeeStore.currentDate) }}</h2>
     </header>
 
     <!-- Main -->
     <main>
-      <h2 class="currentDate">Datum: {{ formatCurrentDate(employeeStore.currentDate) }}</h2>
       <AppBirthdayWishes
         v-if="employeeStore.getCurrentBirthdayCelebrant.length !== 0"
       ></AppBirthdayWishes>
@@ -84,7 +84,7 @@ main {
 }
 
 .currentDate {
-  text-align: right;
+  margin-left: auto;
 }
 
 .card-container {
