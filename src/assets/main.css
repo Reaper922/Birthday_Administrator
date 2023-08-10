@@ -53,3 +53,12 @@ button {
 button:hover {
   transform: scale(102%);
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(42, 54, 71, 0.5);
+  border-radius: 5px;
+}
