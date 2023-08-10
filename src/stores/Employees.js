@@ -10,7 +10,7 @@ export const useEmployeeStore = defineStore('employee', () => {
       id: 1,
       firstname: 'Hans',
       lastname: 'Müller',
-      birthdate: '1992-9-15'
+      birthdate: '1992-09-15'
     },
     {
       id: 2,
@@ -40,13 +40,14 @@ export const useEmployeeStore = defineStore('employee', () => {
       id: 6,
       firstname: 'Svenja',
       lastname: 'Natter',
-      birthdate: '1984-8-14'
+      birthdate: '1984-08-14'
     }
   ]);
 
   // Getters
-  const employeesSortedByBirthdate = computed(() => {
+  const getEmployeesSortedByBirthdate = computed(() => {
     const sortedEmployees = [...employees.value];
+
     sortedEmployees.sort((employeeA, employeeB) => {
       const daysUntilBirthdayEmployeeA = daysUntilNextBirthday(
         currentDate.value,
@@ -62,8 +63,9 @@ export const useEmployeeStore = defineStore('employee', () => {
     return sortedEmployees.slice(0, 4);
   });
 
-  const employeesSortedByName = computed(() => {
+  const getEmployeesSortedByName = computed(() => {
     const sortedEmployees = [...employees.value];
+
     sortedEmployees.sort((employeeA, employeeB) => {
       return (
         employeeA.lastname.toLowerCase().localeCompare(employeeB.lastname.toLowerCase()) ||
@@ -73,10 +75,41 @@ export const useEmployeeStore = defineStore('employee', () => {
     return sortedEmployees;
   });
 
+  const getCurrentBirthdayCelebrant = computed(() => {
+    const birthdayCelebrant = employees.value.filter((employee) => {
+      const date = currentDate.value.toISOString().split('T')[0].substring(5);
+      return date === employee.birthdate.substring(5);
+    });
+
+    return birthdayCelebrant;
+  });
+
+  function getEmployeeAge(dateString) {
+    const birthDate = new Date(dateString);
+    let age = currentDate.value.getFullYear() - birthDate.getFullYear();
+    const month = currentDate.value.getMonth() - birthDate.getMonth();
+
+    if (month < 0 || (month === 0 && currentDate.value.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
   // Actions
   function addEmployee(employee) {
     employee.id = employees.value.length + 1;
-    employees.value.push(employee);
+
+    if (
+      employee.firstname.length > 0 &&
+      employee.lastname.length > 0 &&
+      employee.birthdate.length > 0
+    ) {
+      employees.value.push(employee);
+      console.log(employees.value);
+      return 1;
+    }
+    return 0;
   }
 
   function deleteEmployee(id) {
@@ -88,8 +121,10 @@ export const useEmployeeStore = defineStore('employee', () => {
   return {
     currentDate,
     employees,
-    employeesSortedByBirthdate,
-    employeesSortedByName,
+    getEmployeesSortedByBirthdate,
+    getEmployeesSortedByName,
+    getCurrentBirthdayCelebrant,
+    getEmployeeAge,
     addEmployee,
     deleteEmployee
   };
