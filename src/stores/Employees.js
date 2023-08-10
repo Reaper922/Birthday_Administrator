@@ -45,6 +45,9 @@ export const useEmployeeStore = defineStore('employee', () => {
   ]);
 
   // Getters
+  /**
+   * Sorts all employees by birthday and returns the next 4 celebrants.
+   */
   const getEmployeesSortedByBirthdate = computed(() => {
     const sortedEmployees = [...employees.value];
 
@@ -63,6 +66,9 @@ export const useEmployeeStore = defineStore('employee', () => {
     return sortedEmployees.slice(0, 4);
   });
 
+  /**
+   * Sorts all employees by and returns the sorted array.
+   */
   const getEmployeesSortedByName = computed(() => {
     const sortedEmployees = [...employees.value];
 
@@ -75,6 +81,9 @@ export const useEmployeeStore = defineStore('employee', () => {
     return sortedEmployees;
   });
 
+  /**
+   * Determines whether an employee's birthday is today and returns him in an array.
+   */
   const getCurrentBirthdayCelebrant = computed(() => {
     const birthdayCelebrant = employees.value.filter((employee) => {
       const date = currentDate.value.toISOString().split('T')[0].substring(5);
@@ -84,6 +93,11 @@ export const useEmployeeStore = defineStore('employee', () => {
     return birthdayCelebrant;
   });
 
+  /**
+   * Calculates the age of an employee based on the given date string
+   * @param {string} dateString The birthdate string in 'yyyy-mm-dd' format.
+   * @returns
+   */
   function getEmployeeAge(dateString) {
     const birthDate = new Date(dateString);
     let age = currentDate.value.getFullYear() - birthDate.getFullYear();
@@ -97,6 +111,11 @@ export const useEmployeeStore = defineStore('employee', () => {
   }
 
   // Actions
+  /**
+   * Adds a new employee to the emlpoyees array. The input fields must be filled.
+   * @param {Object} employee Object of the employee.
+   * @returns
+   */
   function addEmployee(employee) {
     employee.id = employees.value.length + 1;
 
@@ -112,9 +131,13 @@ export const useEmployeeStore = defineStore('employee', () => {
     return 0;
   }
 
-  function deleteEmployee(id) {
+  /**
+   * Deletes the employee with given id from the employees array.
+   * @param {Number} employeeId Id of the employee.
+   */
+  function deleteEmployee(employeeId) {
     employees.value = employees.value.filter((employee) => {
-      return employee.id !== id;
+      return employee.id !== employeeId;
     });
   }
 
