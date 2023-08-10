@@ -1,26 +1,19 @@
 <script setup>
-import { onUpdated } from 'vue';
 import { daysUntilNextBirthday, formatBirthdate } from '@/services/DateService';
+import { useEmployeeStore } from '@/stores/Employees';
 
-const emit = defineEmits(['birthday']);
 const props = defineProps({
   employee: {
     type: Object,
     required: true
   },
-  currentDate: {
-    type: Date,
+  index: {
+    type: Number,
     required: true
   }
 });
 
-onUpdated(() => {
-  const isBirthday = daysUntilNextBirthday(props.currentDate, props.employee.birthdate) === 0;
-
-  if (isBirthday) {
-    emit('birthday', props.employee);
-  }
-});
+const employeeStore = useEmployeeStore();
 </script>
 
 <template>
@@ -30,8 +23,8 @@ onUpdated(() => {
       <h2>{{ employee.firstname }} {{ employee.lastname }}</h2>
       <p>
         Geburtstag: {{ formatBirthdate(employee.birthdate) }}<br />
-        Noch {{ daysUntilNextBirthday(props.currentDate, props.employee.birthdate) }} Tage bis zum
-        Geburtstag
+        Noch {{ daysUntilNextBirthday(employeeStore.currentDate, props.employee.birthdate) }} Tage
+        bis zum Geburtstag
       </p>
     </div>
   </div>
