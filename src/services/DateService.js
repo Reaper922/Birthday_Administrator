@@ -1,18 +1,17 @@
 function daysUntilNextBirthday(currentDate, employeeBirthdate) {
   const currentYear = currentDate.getFullYear();
-  const currentemployeeBirthday = new Date(employeeBirthdate).setFullYear(currentYear);
-  const diffInMillSec = currentemployeeBirthday - currentDate;
-  const diffInDays = Math.floor(diffInMillSec / (1000 * 60 * 60 * 24)) + 1;
+  const nextBirthday = new Date(employeeBirthdate);
 
-  if (diffInDays < 0) {
-    const nextemployeeBirthday = new Date(employeeBirthdate).setFullYear(currentYear + 1);
-    const nextDiffInMillSec = nextemployeeBirthday - currentDate;
-    const nextDiffInDays = Math.floor(nextDiffInMillSec / (1000 * 60 * 60 * 24) + 1);
+  nextBirthday.setFullYear(currentYear);
 
-    return nextDiffInDays;
+  if (nextBirthday <= currentDate) {
+    nextBirthday.setFullYear(currentYear + 1);
   }
 
-  return diffInDays;
+  const timeDiff = nextBirthday - currentDate;
+  const daysUntilNextBirthday = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+  return daysUntilNextBirthday;
 }
 
 function formatBirthdate(birthdate) {
