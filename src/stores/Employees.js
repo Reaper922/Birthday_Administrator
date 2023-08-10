@@ -43,6 +43,7 @@ export const useEmployeeStore = defineStore('employee', () => {
       birthdate: '1984-08-14'
     }
   ]);
+  let lastEmployeeId = 6;
 
   // Getters
   /**
@@ -117,7 +118,8 @@ export const useEmployeeStore = defineStore('employee', () => {
    * @returns
    */
   function addEmployee(employee) {
-    employee.id = employees.value.length + 1;
+    lastEmployeeId += 1;
+    employee.id = lastEmployeeId;
 
     if (
       employee.firstname.length > 0 &&
@@ -125,7 +127,6 @@ export const useEmployeeStore = defineStore('employee', () => {
       employee.birthdate.length > 0
     ) {
       employees.value.push(employee);
-      console.log(employees.value);
       return 1;
     }
     return 0;
