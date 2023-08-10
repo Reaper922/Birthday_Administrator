@@ -66,6 +66,7 @@ watch(simulatedDate, () => {
   box-shadow: var(--box-shadow-md);
   font-size: 18px;
   background: white;
+  overflow-y: auto;
   z-index: 5;
   user-select: none;
 }

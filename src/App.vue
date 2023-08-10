@@ -8,7 +8,6 @@ import AppBirthdayWishes from '@/components/AppBirthdayWishes.vue';
 
 const employeeStore = useEmployeeStore();
 const isSidebarOpen = ref(false);
-const isBirthday = ref(false);
 </script>
 
 <template>
@@ -31,16 +30,16 @@ const isBirthday = ref(false);
     <!-- Main -->
     <main>
       <h2 class="currentDate">Datum: {{ formatCurrentDate(employeeStore.currentDate) }}</h2>
-      <AppBirthdayWishes v-if="isBirthday"></AppBirthdayWishes>
+      <AppBirthdayWishes
+        v-if="employeeStore.getCurrentBirthdayCelebrant.length !== 0"
+      ></AppBirthdayWishes>
       <div class="card-container">
         <h2>Anstehende Geburtstage:</h2>
         <AppCard
-          v-for="employee in employeeStore.employeesSortedByBirthdate"
+          v-for="(employee, index) in employeeStore.getEmployeesSortedByBirthdate"
           :key="employee.id"
           :employee="employee"
-          :currentDate="employeeStore.currentDate"
-          :test="employee.id"
-          @birthday="isBirthday = true"
+          :index="index"
         ></AppCard>
       </div>
     </main>
