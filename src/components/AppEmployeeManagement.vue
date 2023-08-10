@@ -36,10 +36,17 @@ function editEmployee(employee) {
 function updateEmployee() {
   const employeeId = Number(saveEdit.value.dataset.id);
   const employee = employeeStore.employees.find((employee) => employee.id === employeeId);
-  employee.firstname = firstnameEdit.value.value;
-  employee.lastname = lastnameEdit.value.value;
-  employee.birthdate = birthdateEdit.value.value;
-  isEditing.value = false;
+
+  if (
+    firstnameEdit.value.value.length > 0 &&
+    lastnameEdit.value.value.length > 0 &&
+    birthdateEdit.value.value.length > 0
+  ) {
+    employee.firstname = firstnameEdit.value.value;
+    employee.lastname = lastnameEdit.value.value;
+    employee.birthdate = birthdateEdit.value.value;
+    isEditing.value = false;
+  }
 }
 
 function clearInputFields() {
